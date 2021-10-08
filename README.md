@@ -1,8 +1,8 @@
 # Projet javascript Joly Dylan, Macadré Clément, Gomond Ronan
 
-## Génération de playlist à l'aide de l'api Spotify
+### Génération de playlist à l'aide de l'api Spotify
 
-# Développement d'une interface graphique permettant de créer des playlists à partir d'une session d'écoute de groupe.
+### Développement d'une interface graphique permettant de créer des playlists à partir d'une session d'écoute de groupe.
 
 Les participants se connectent avec leurs comptes Spotify via l'api Spotify pour que l'application ait accès à leurs activités.
 Un historique des musiques jouées est créé pendant cette session de groupe.
