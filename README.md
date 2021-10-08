@@ -1,6 +1,4 @@
-# projet5A_javascript_playlist_spotify-
-
-## Projet javascript Joly Dylan, Macadré Clément, Gomond Ronan
+# Projet javascript Joly Dylan, Macadré Clément, Gomond Ronan
 
 ## Génération de playlist à l'aide de l'api Spotify
 
