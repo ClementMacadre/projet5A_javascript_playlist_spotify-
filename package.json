@@ -1,0 +1,12 @@
+{
+    "name": "Historica",
+    "version": "0.0.1",
+    "description": "Application WEB de historique spotify",
+    "dependencies": {
+        "express": "latest",
+        "cors": "latest",
+        "querystring": "latest",
+        "cookie-parser": "latest"
+    },
+    "author": "Polytech Angers - SAGI"
+}
