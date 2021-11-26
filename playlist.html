@@ -1,0 +1,46 @@
+<!--
+voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_website.htm
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Créer une playlist</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<img src="Pictures/Yfitops.png" height="40">
+		<button onclick="window.open('')" style="float:right">Connexion</button>
+	</div>
+
+	<div class="true-body">
+		<div class="leftzone">
+			<img src="Pictures/itcotck.jpg" class="bouger" width="200">
+			<img src="Pictures/dangerousd.jpg" class="bouger" width="200">
+			<img src="Pictures/lctc.jpg" class="bouger" width="200">
+		</div>
+		<div class="dropzone deposer"> </div>
+	</div>
+
+	<script type="text/javascript">
+		$(".bouger").draggable({
+			revert:true,
+			helper:"clone"
+		}) ;
+		$(".deposer").droppable({ 
+			accept:".bouger",
+			activeClass:"zone-drop-active",
+			hoverClass:"zone-drop-survolee",
+			
+			drop:function(event, ui){
+				newImage = ui.draggable.clone();
+				$(".deposer").append(newImage);
+		}});
+	</script>
+</body>
+</html>

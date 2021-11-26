@@ -1,0 +1,46 @@
+/* En-tête */
+.header{
+	padding: 20px 35px;
+	height: 45px;
+	display: block;
+	background: darkblue;
+	border: 1px solid white;
+}
+.header button{
+	height: 40px;
+	width: 90px;
+	color: white;
+	background-color: deeppink;
+	border-radius: 6px;
+}
+.header button:hover{
+	color: deeppink;
+	background-color: white;
+}
+
+/* Partie centrale */
+.true-body{
+	display: flex;
+	height: 600px;
+	gap: 15px 5px;
+}
+.leftzone{
+	border:  2px deeppink solid;
+	display: inline-block;
+	flex: 60%;
+}
+.dropzone{
+	border:  2px deeppink solid;
+	display: inline-block;
+	flex: 40%;
+}
+
+/* Style pour le drag and drop */
+.bouger{
+	float: none;
+	width: 200px;
+	display: inline-block;
+}
+.in-playlist{
+	
+}
