@@ -7,6 +7,9 @@
 	border: 1px solid white;
 	margin-bottom: 6px;
 }
+.header img:hover{
+	cursor: pointer;
+}
 .header button{
 	height: 40px;
 	width: 90px;
@@ -15,6 +18,7 @@
 	border-radius: 6px;
 }
 .header button:hover{
+	cursor: pointer;
 	color: deeppink;
 	background-color: white;
 }
