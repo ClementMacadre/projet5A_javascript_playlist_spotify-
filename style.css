@@ -5,6 +5,7 @@
 	display: block;
 	background: darkblue;
 	border: 1px solid white;
+	margin-bottom: 6px;
 }
 .header button{
 	height: 40px;
@@ -21,18 +22,28 @@
 /* Partie centrale */
 .true-body{
 	display: flex;
-	height: 600px;
+	height: calc(100vh - 110px);
 	gap: 15px 5px;
 }
-.leftzone{
-	border:  2px deeppink solid;
-	display: inline-block;
-	flex: 60%;
+.true-body h1{
+	font-family: fantasy;
+	font-size: 50px;
+	color: deeppink;
+	margin: 35px;
 }
-.dropzone{
+/* Largeur des images dans les box */
+.true-body img{
+	width: 200px;
+}
+#leftzone{
 	border:  2px deeppink solid;
 	display: inline-block;
-	flex: 40%;
+	flex: 50%;
+}
+#dropzone{
+	border:  2px deeppink solid;
+	display: inline-block;
+	flex: 50%;
 }
 
 /* Style pour le drag and drop */
@@ -41,6 +52,6 @@
 	width: 200px;
 	display: inline-block;
 }
-.in-playlist{
-	
+.ui-droppable-hover{
+	background-color: rgba(245, 218, 223, 0.3);
 }

@@ -8,39 +8,72 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 	<meta charset="UTF-8">
 	<title>Créer une playlist</title>
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="JS/jquery.min.js"></script>
+	<script src="JS/jquery-ui.min.js"></script>
 </head>
 
 <body>
 	<div class="header">
-		<img src="Pictures/Yfitops.png" height="40">
-		<button onclick="window.open('')" style="float:right">Connexion</button>
+		<img src="Pictures/Yfitops.png" onclick="window.location='playlist.html'" height="40">
+		<button onclick="window.open('hello.html')" style="float:right">Connexion</button>
 	</div>
 
 	<div class="true-body">
-		<div class="leftzone">
-			<img src="Pictures/itcotck.jpg" class="bouger" width="200">
-			<img src="Pictures/dangerousd.jpg" class="bouger" width="200">
-			<img src="Pictures/lctc.jpg" class="bouger" width="200">
+		<div id="leftzone" class="deposer">
+			<img id="kc" src="Pictures/itcotck.jpg" class="bouger">
+			<img id="dd" src="Pictures/dangerousd.jpg" class="bouger">
+			<img id="tc" src="Pictures/lctc.jpg" class="bouger">
+			<img id="an" src="Pictures/animals.jpg" class="bouger">
 		</div>
-		<div class="dropzone deposer"> </div>
+		<div id="dropzone" class="deposer"> 
+			<img id="tc" src="Pictures/lctc.jpg" class="bouger">
+			<img id="mw" src="Pictures/mwr.jpg" class="bouger">
+		</div>
 	</div>
 
 	<script type="text/javascript">
 		$(".bouger").draggable({
-			revert:true,
-			helper:"clone"
-		}) ;
+			revert: true,
+			helper: "clone"
+		});
 		$(".deposer").droppable({ 
-			accept:".bouger",
-			activeClass:"zone-drop-active",
-			hoverClass:"zone-drop-survolee",
+			// Accepter uniquement les éléments contenant la classe bouger
+			accept: ".bouger",
 			
 			drop:function(event, ui){
+
+				let id = ui.draggable.attr('id');
+				// On regarde la source de l'image
+				if(ui.draggable.parent().attr('id') === 'dropzone'){
+					cloneImage(ui, "#leftzone", id);
+				}
+				else{
+					cloneImage(ui, "#dropzone", id);
+				}
+			}
+		});
+		
+		function cloneImage(ui, zone, id){
+			let idExists = false;
+
+			// On parcourt toutes les images dans la zone pour vérifier que l'image n'existe pas déjà
+			$(zone + ' > img').map(function(){
+				if(this.id == id){
+					print('assertion true')
+					idExists = true;
+				}
+			});
+			// Ici est gérée la logique à appliquer lors du drop d'une image
+			if(!idExists){
+				// Gestion de la nouvelle image (en récupérant l'image déposée)
 				newImage = ui.draggable.clone();
-				$(".deposer").append(newImage);
-		}});
+				// Pour pouvoir redéplacer l'image
+				newImage.draggable({
+					helper: "clone"
+				});
+				$(zone).append(newImage);
+			}
+		}
 	</script>
 </body>
 </html>
