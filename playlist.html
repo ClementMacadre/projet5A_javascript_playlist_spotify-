@@ -8,14 +8,16 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 	<meta charset="UTF-8">
 	<title>Créer une playlist</title>
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen"/>
+
 	<script src="JS/jquery.min.js"></script>
 	<script src="JS/jquery-ui.min.js"></script>
+    <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
 </head>
 
 <body>
 	<div class="header">
 		<img src="Pictures/Yfitops.png" onclick="window.location='playlist.html'" height="40">
-		<button id="connexion" onclick="window.location='connexion.html'" style="float:right">Connexion</button>
+		<button id="connexion" style="float:right">Connexion</button>
 	</div>
 
 	<div class="true-body">
@@ -60,7 +62,6 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 			// On parcourt toutes les images dans la zone pour vérifier que l'image n'existe pas déjà
 			$(zone + ' > img').map(function(){
 				if(this.id == id){
-					print('assertion true')
 					idExists = true;
 				}
 			});
@@ -76,12 +77,12 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 			}
 		}
 	</script>
+
 	<!-- Script Connexion -->
 	<script type="text/javascript">
-	/*
 		var loginButton = document.getElementById('connexion');
 
-		loginButton.addEventListener('click', function{
+		loginButton.addEventListener('click', function() {
 			login(function(accessToken) {
 	            getUserData(accessToken)
 	                .then(function(response) {
@@ -122,8 +123,16 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 			                    'Spotify',
 			                    'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
 			                   );
+		}
 
-		}*/
+	    function getUserData(accessToken) {
+	        return $.ajax({
+	            url: 'https://api.spotify.com/v1/me',
+	            headers: {
+	               'Authorization': 'Bearer ' + accessToken
+	            }
+	        });
+	    }
 	</script>
 </body>
 </html>
