@@ -1,6 +1,11 @@
 # Projet javascript Joly Dylan, Macadré Clément, Gomond Ronan
 
-### Génération de playlist à l'aide de l'api Spotify
+## Doc code JS front
+
+fonctions:
+- `addSong(imgSrc, title, artist)` pour ajouter une chanson avec en argument l'url de l'image à afficher, le titre de la chanson et l'artiste
+
+## Génération de playlist à l'aide de l'api Spotify
 
 ### Développement d'une interface graphique permettant de créer des playlists à partir d'une session d'écoute de groupe.
 

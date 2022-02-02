@@ -78,6 +78,27 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 		}
 	</script>
 
+	<!-- Script add div -->
+	<script type="text/javascript">
+		function addSong(imgSrc, title, artist){
+			$('#dropzone').append($(document.createElement('div'))
+				.addClass('song')
+			    .hide()
+			    .append($(document.createElement('img'))
+			        .attr({ src : imgSrc })
+			        .addClass('song-image')
+			    )
+			    .append($(document.createElement('p'))
+			    	.addClass('song-title')
+			    	.text(title)
+			    .append($(document.createElement('p')))
+			    	.addClass('song-artist')
+			    	.text(artist)
+			));
+		}
+		addSong('file:///C:/Users/usrlocal/Desktop/projet5A_javascript_playlist_spotify/Pictures/dangerousd.jpg','coucou','coucou');
+	</script>
+
 	<!-- Script Connexion -->
 	<script type="text/javascript">
 		var loginButton = document.getElementById('connexion');
