@@ -15,7 +15,7 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 <body>
 	<div class="header">
 		<img src="Pictures/Yfitops.png" onclick="window.location='playlist.html'" height="40">
-		<button onclick="window.open('hello.html')" style="float:right">Connexion</button>
+		<button id="connexion" onclick="window.location='connexion.html'" style="float:right">Connexion</button>
 	</div>
 
 	<div class="true-body">
@@ -31,6 +31,7 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 		</div>
 	</div>
 
+	<!-- Script drag & drop -->
 	<script type="text/javascript">
 		$(".bouger").draggable({
 			revert: true,
@@ -74,6 +75,55 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 				$(zone).append(newImage);
 			}
 		}
+	</script>
+	<!-- Script Connexion -->
+	<script type="text/javascript">
+	/*
+		var loginButton = document.getElementById('connexion');
+
+		loginButton.addEventListener('click', function{
+			login(function(accessToken) {
+	            getUserData(accessToken)
+	                .then(function(response) {
+	                    loginButton.style.display = 'none';
+	                    resultsPlaceholder.innerHTML = template(response);
+	                });
+	            });
+	    });
+
+		function login(callback) {
+			var CLIENT_ID = '6b284830006843e7ae7b170725715aed';
+			var REDIRECT_URI = 'http://jmperezperez.com/spotify-oauth-jsfiddle-proxy/';
+			
+			function getLoginURL(scopes) {
+			    return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
+			      '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
+			      '&scope=' + encodeURIComponent(scopes.join(' ')) +
+			      '&response_type=token';
+			}
+
+			var url = getLoginURL([
+			    'user-read-email'
+			]);
+
+			var width = 450,
+			    height = 730,
+			    left = (screen.width / 2) - (width / 2),
+			    top = (screen.height / 2) - (height / 2);
+
+			window.addEventListener("message", function(event) {
+			    var hash = JSON.parse(event.data);
+			    if (hash.type == 'access_token') {
+			        callback(hash.access_token);
+			    }
+			}, false);
+
+			var w = window.open(url,
+			                    'Spotify',
+			                    'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
+			                   );
+
+		}*/
 	</script>
 </body>
 </html>
