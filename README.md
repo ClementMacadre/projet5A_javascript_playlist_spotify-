@@ -3,7 +3,8 @@
 ## Doc code JS front
 
 fonctions:
-- `addSong(imgSrc, title, artist)` pour ajouter une chanson avec en argument l'url de l'image à afficher, le titre de la chanson et l'artiste
+- `addSong(div, imgSrc, title, artist)` pour ajouter une chanson avec en argument l'url de l'image à afficher, le titre de la chanson et l'artiste
+- exemple : `addSong('leftzone', 'Pictures/lctc.jpg', 'London calling', 'The Clash');`
 
 ## Génération de playlist à l'aide de l'api Spotify
 

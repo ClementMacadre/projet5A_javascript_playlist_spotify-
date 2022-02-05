@@ -31,14 +31,16 @@
 
 	<!-- Script drag & drop -->
 	<script type="text/javascript">
-		$(".bouger").draggable({
-			revert: true,
-			helper: "clone",
-			handle: ".song-image .song-artist .song-title",
-			drag:function(event,ui){
-				console.log(event,ui)
-			}
-		});
+		function updateDrag(){
+			$(".bouger").draggable({
+				revert: true,
+				helper: "clone",
+				cancel: ".song-image .song-artist .song-title",
+				drag:function(event,ui){
+					console.log(event,ui)
+				}
+			});
+		}
 		$(".deposer").droppable({ 
 			// Accepter uniquement les éléments contenant la classe bouger
 			accept: ".bouger",
@@ -95,6 +97,7 @@
 			    	.addClass('song-artist')
 			    	.text(artist))
 			);
+			updateDrag();
 		}
 		// Ajouter dans la zone de gauche
 		addSong('leftzone', 'Pictures/itcotck.jpg', '21st Century Schizoid man', 'King Crimson');

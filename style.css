@@ -70,7 +70,6 @@ body{
 	grid-template-columns: 120px 1fr;
 	grid-template-rows: repeat(3, 1fr);
 	grid-column-gap: 10px;
-	-webkit-user-drag: element;
 }
 .song-image{
 	grid-area: 1 / 1 / 4 / 2;
