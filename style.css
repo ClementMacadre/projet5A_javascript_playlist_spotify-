@@ -1,8 +1,16 @@
+/* Toute la page */
+body{
+	font-family: Bahnschrift;
+	margin: 0px;
+}
+
 /* En-tête */
 .header{
 	padding: 20px 35px;
 	height: 45px;
 	display: block;
+	position: sticky;
+	position: -webkit-sticky;
 	background: darkblue;
 	border: 1px solid white;
 	margin-bottom: 6px;
@@ -26,35 +34,67 @@
 /* Partie centrale */
 .true-body{
 	display: flex;
-	height: calc(100vh - 110px);
+	height: calc(100vh - 95px);
+	margin: 0px 10px;
 	gap: 15px 5px;
 }
 .true-body h1{
-	font-family: fantasy;
 	font-size: 50px;
 	color: deeppink;
 	margin: 35px;
 }
+
 /* Largeur des images dans les box */
-.true-body img{
-	width: 200px;
-}
 #leftzone{
 	border:  2px deeppink solid;
 	display: inline-block;
 	flex: 50%;
+	max-height: calc(100vh - 110px);
+	overflow: auto;
 }
 #dropzone{
 	border:  2px deeppink solid;
 	display: inline-block;
 	flex: 50%;
+	max-height: calc(100vh - 110px);
+	overflow: auto;
+}
+
+/* Style des divs pour une chanson */
+.song{
+	background-color: aliceblue;
+	border: 2px darkblue solid;
+	margin: 5px 10px;
+	padding: 7px;
+	display: grid;
+	grid-template-columns: 120px 1fr;
+	grid-template-rows: repeat(3, 1fr);
+	grid-column-gap: 10px;
+	-webkit-user-drag: element;
+}
+.song-image{
+	grid-area: 1 / 1 / 4 / 2;
+	height: 120px;
+	user-select: none;
+}
+.song-title{
+	margin: 7px 0px 8px 0px;
+	font-size: 20px;
+	font-weight: bold;
+	color: darkblue;
+	grid-area: 1 / 2 / 2 / 3;
+	user-select: none;
+}
+.song-artist{
+	margin: 0px;
+	color: darkblue;
+	grid-area: 2 / 2 / 3 / 3;
+	user-select: none;
 }
 
 /* Style pour le drag and drop */
 .bouger{
 	float: none;
-	width: 200px;
-	display: inline-block;
 }
 .ui-droppable-hover{
 	background-color: rgba(245, 218, 223, 0.3);

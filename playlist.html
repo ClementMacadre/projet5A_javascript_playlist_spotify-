@@ -1,7 +1,3 @@
-<!--
-voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_website.htm
--->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,14 +18,14 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 
 	<div class="true-body">
 		<div id="leftzone" class="deposer">
-			<img id="kc" src="Pictures/itcotck.jpg" class="bouger">
+			<!--<img id="kc" src="Pictures/itcotck.jpg" class="bouger">
 			<img id="dd" src="Pictures/dangerousd.jpg" class="bouger">
 			<img id="tc" src="Pictures/lctc.jpg" class="bouger">
-			<img id="an" src="Pictures/animals.jpg" class="bouger">
+			<img id="an" src="Pictures/animals.jpg" class="bouger">-->
 		</div>
 		<div id="dropzone" class="deposer"> 
-			<img id="tc" src="Pictures/lctc.jpg" class="bouger">
-			<img id="mw" src="Pictures/mwr.jpg" class="bouger">
+			<!--<img id="tc" src="Pictures/lctc.jpg" class="bouger">
+			<img id="mw" src="Pictures/mwr.jpg" class="bouger">-->
 		</div>
 	</div>
 
@@ -37,7 +33,11 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 	<script type="text/javascript">
 		$(".bouger").draggable({
 			revert: true,
-			helper: "clone"
+			helper: "clone",
+			handle: ".song-image .song-artist .song-title",
+			drag:function(event,ui){
+				console.log(event,ui)
+			}
 		});
 		$(".deposer").droppable({ 
 			// Accepter uniquement les éléments contenant la classe bouger
@@ -58,7 +58,7 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 		
 		function cloneImage(ui, zone, id){
 			let idExists = false;
-
+			console.log('bouger');
 			// On parcourt toutes les images dans la zone pour vérifier que l'image n'existe pas déjà
 			$(zone + ' > img').map(function(){
 				if(this.id == id){
@@ -80,10 +80,9 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 
 	<!-- Script add div -->
 	<script type="text/javascript">
-		function addSong(imgSrc, title, artist){
-			$('#dropzone').append($(document.createElement('div'))
-				.addClass('song')
-			    .hide()
+		function addSong(zone, imgSrc, title, artist){
+			$('#' + zone).append($(document.createElement('div'))
+				.addClass('song bouger')
 			    .append($(document.createElement('img'))
 			        .attr({ src : imgSrc })
 			        .addClass('song-image')
@@ -91,12 +90,22 @@ voir présentation ici : https://www.w3schools.com/howto/tryhow_css_example_webs
 			    .append($(document.createElement('p'))
 			    	.addClass('song-title')
 			    	.text(title)
-			    .append($(document.createElement('p')))
+			    )
+			    .append($(document.createElement('p'))
 			    	.addClass('song-artist')
-			    	.text(artist)
-			));
+			    	.text(artist))
+			);
 		}
-		addSong('file:///C:/Users/usrlocal/Desktop/projet5A_javascript_playlist_spotify/Pictures/dangerousd.jpg','coucou','coucou');
+		// Ajouter dans la zone de gauche
+		addSong('leftzone', 'Pictures/itcotck.jpg', '21st Century Schizoid man', 'King Crimson');
+		addSong('leftzone', 'Pictures/lctc.jpg', 'London calling', 'The Clash');
+		addSong('leftzone', 'Pictures/animals.jpg', 'Dogs', 'Pink Floyd');
+		addSong('leftzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War');
+		addSong('leftzone', 'Pictures/dangerousd.jpg','Future club','Perturbator');
+
+		// Ajouter dans la zone de droite
+		addSong('dropzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War');
+		addSong('dropzone', 'Pictures/dangerousd.jpg','Future club','Perturbator');
 	</script>
 
 	<!-- Script Connexion -->
