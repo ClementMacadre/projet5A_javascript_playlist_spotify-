@@ -18,29 +18,31 @@
 
 	<div class="true-body">
 		<div id="leftzone" class="deposer">
-			<!--<img id="kc" src="Pictures/itcotck.jpg" class="bouger">
-			<img id="dd" src="Pictures/dangerousd.jpg" class="bouger">
-			<img id="tc" src="Pictures/lctc.jpg" class="bouger">
-			<img id="an" src="Pictures/animals.jpg" class="bouger">-->
 		</div>
 		<div id="dropzone" class="deposer"> 
-			<!--<img id="tc" src="Pictures/lctc.jpg" class="bouger">
-			<img id="mw" src="Pictures/mwr.jpg" class="bouger">-->
 		</div>
 	</div>
 
 	<!-- Script drag & drop -->
 	<script type="text/javascript">
+		// Met à jour les éléments pouvant être bougés
 		function updateDrag(){
 			$(".bouger").draggable({
 				revert: true,
 				helper: "clone",
 				cancel: ".song-image .song-artist .song-title",
-				drag:function(event,ui){
-					console.log(event,ui)
+			});
+
+			// A améliorer (l'élément déplacé disparaît)
+			$('.drag-vertical').draggable({
+				axis: 'y',
+				handle: '.move',
+				helper: function(){
+					return this.parentElement;
 				}
 			});
 		}
+
 		$(".deposer").droppable({ 
 			// Accepter uniquement les éléments contenant la classe bouger
 			accept: ".bouger",
@@ -60,9 +62,8 @@
 		
 		function cloneImage(ui, zone, id){
 			let idExists = false;
-			console.log('bouger');
 			// On parcourt toutes les images dans la zone pour vérifier que l'image n'existe pas déjà
-			$(zone + ' > img').map(function(){
+			$(zone + ' > .bouger').map(function(){
 				if(this.id == id){
 					idExists = true;
 				}
@@ -71,11 +72,8 @@
 			if(!idExists){
 				// Gestion de la nouvelle image (en récupérant l'image déposée)
 				newImage = ui.draggable.clone();
-				// Pour pouvoir redéplacer l'image
-				newImage.draggable({
-					helper: "clone"
-				});
 				$(zone).append(newImage);
+				updateDrag();
 			}
 		}
 	</script>
@@ -83,25 +81,50 @@
 	<!-- Script add div -->
 	<script type="text/javascript">
 		function addSong(zone, imgSrc, title, artist){
+			let newID = (title + ' ' + artist).replaceAll(' ', '-').toLowerCase();
+			console.log(newID)
 			$('#' + zone).append($(document.createElement('div'))
-				.addClass('song bouger')
-			    .append($(document.createElement('img'))
-			        .attr({ src : imgSrc })
-			        .addClass('song-image')
-			    )
-			    .append($(document.createElement('p'))
-			    	.addClass('song-title')
-			    	.text(title)
-			    )
-			    .append($(document.createElement('p'))
-			    	.addClass('song-artist')
-			    	.text(artist))
+				.attr({ 'id' : newID })
+				.addClass('bouger')
+				.append($(document.createElement('div'))
+					.addClass('song drag-vertical')
+					.append($(document.createElement('img'))
+						.attr({ src : 'Pictures/Hamburger_icon.svg'})
+						.addClass('move')
+					)
+				    .append($(document.createElement('img'))
+				        .attr({ src : imgSrc })
+				        .addClass('song-image')
+				    )
+				    .append($(document.createElement('p'))
+				    	.addClass('song-title')
+				    	.text(title)
+				    )
+				    .append($(document.createElement('p'))
+				    	.addClass('song-artist')
+				    	.text(artist))
+					.append($(document.createElement('img'))
+						.attr({ src : 'Pictures/trash.svg',})
+						.attr('onClick', 'deleteSong(this)')
+						.addClass('trash')
+					)
+					.append($(document.createElement('img'))
+						.attr({ src : 'Pictures/play.svg'})
+						.attr('onClick', 'playSong(this.parentElement)')
+						.addClass('play')
+					)
+				)	
 			);
 			updateDrag();
 		}
+
+		function deleteSong(e){
+			e.parentElement.remove();
+		}
+
 		// Ajouter dans la zone de gauche
 		addSong('leftzone', 'Pictures/itcotck.jpg', '21st Century Schizoid man', 'King Crimson');
-		addSong('leftzone', 'Pictures/lctc.jpg', 'London calling', 'The Clash');
+		addSong('leftzone', 'Pictures/lctc.jpg', 'London Calling', 'The Clash');
 		addSong('leftzone', 'Pictures/animals.jpg', 'Dogs', 'Pink Floyd');
 		addSong('leftzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War');
 		addSong('leftzone', 'Pictures/dangerousd.jpg','Future club','Perturbator');
@@ -109,6 +132,13 @@
 		// Ajouter dans la zone de droite
 		addSong('dropzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War');
 		addSong('dropzone', 'Pictures/dangerousd.jpg','Future club','Perturbator');
+	</script>
+
+	<script type="text/javascript">
+		function playSong(divId){
+			console.log(divId);
+			// Avec ce parent, on peut facilement retrouver des infos sur la chanson à jouer
+		}
 	</script>
 
 	<!-- Script Connexion -->

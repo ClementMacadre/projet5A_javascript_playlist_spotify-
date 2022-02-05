@@ -67,12 +67,15 @@ body{
 	margin: 5px 10px;
 	padding: 7px;
 	display: grid;
-	grid-template-columns: 120px 1fr;
+	grid-template-columns: 20px 120px 1fr 30px;
 	grid-template-rows: repeat(3, 1fr);
 	grid-column-gap: 10px;
 }
+.song:hover{
+	cursor: move;
+}
 .song-image{
-	grid-area: 1 / 1 / 4 / 2;
+	grid-area: 1 / 2 / 4 / 3;
 	height: 120px;
 	user-select: none;
 }
@@ -81,14 +84,41 @@ body{
 	font-size: 20px;
 	font-weight: bold;
 	color: darkblue;
-	grid-area: 1 / 2 / 2 / 3;
+	grid-area: 1 / 3 / 2 / 4;
 	user-select: none;
 }
 .song-artist{
 	margin: 0px;
 	color: darkblue;
-	grid-area: 2 / 2 / 3 / 3;
+	grid-area: 2 / 3 / 3 / 4;
 	user-select: none;
+}
+.trash{
+	grid-area: 1 / 4 / 4 / 5;
+	margin: 5px 5px 0px 0px;
+	width: 30px;
+	height: 30px;
+}
+.trash:hover{
+	cursor: pointer;
+}
+.move{
+	grid-area: 1 / 1 / 4 / 2;
+	width: 20px;
+	height: 20px;
+	align-self: center;
+}
+.move:hover{
+	cursor: grab;
+}
+.play{
+	align-self: center;
+	grid-area: 1 / 4 / 4 / 5;
+	width: 30px;
+	height: 30px;
+}
+.play:hover{
+	cursor: pointer;
 }
 
 /* Style pour le drag and drop */
