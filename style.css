@@ -22,12 +22,12 @@ body{
 	height: 40px;
 	width: 90px;
 	color: white;
-	background-color: deeppink;
+	background-color: #E64E95;
 	border-radius: 6px;
 }
 .header button:hover{
 	cursor: pointer;
-	color: deeppink;
+	color: #E64E95;
 	background-color: white;
 }
 
@@ -40,24 +40,28 @@ body{
 }
 .true-body h1{
 	font-size: 50px;
-	color: deeppink;
+	color: #E64E95;
 	margin: 35px;
 }
 
 /* Largeur des images dans les box */
 #leftzone{
-	border:  2px deeppink solid;
+	border:  2px #E64E95 solid;
 	display: inline-block;
 	flex: 50%;
 	max-height: calc(100vh - 110px);
 	overflow: auto;
+	scrollbar-color: darkblue #E64E95;
+	scrollbar-width: thin;
 }
 #dropzone{
-	border:  2px deeppink solid;
+	border:  2px #E64E95 solid;
 	display: inline-block;
 	flex: 50%;
 	max-height: calc(100vh - 110px);
 	overflow: auto;
+	scrollbar-color: darkblue #E64E95;
+	scrollbar-width: thin;
 }
 
 /* Style des divs pour une chanson */
