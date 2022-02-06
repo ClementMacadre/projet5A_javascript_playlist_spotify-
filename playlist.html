@@ -17,9 +17,9 @@
 	</div>
 
 	<div class="true-body">
-		<div id="leftzone" class="deposer">
+		<div id="leftzone" class="deposer drop-vertically">
 		</div>
-		<div id="dropzone" class="deposer"> 
+		<div id="dropzone" class="deposer drop-vertically"> 
 		</div>
 	</div>
 
@@ -49,16 +49,29 @@
 			
 			drop:function(event, ui){
 
+				let zone = ui.draggable.parent().attr('id');
+				// Si l'élément est droppé sur la zone d'où il vient on sort de la fonction
+				if(zone == this.id){
+					return;
+				}
+
 				let id = ui.draggable.attr('id');
-				// On regarde la source de l'image
-				if(ui.draggable.parent().attr('id') === 'dropzone'){
+				if(zone === 'dropzone'){
 					cloneImage(ui, "#leftzone", id);
 				}
 				else{
 					cloneImage(ui, "#dropzone", id);
 				}
 			}
-		});
+		});/**/
+/*
+		$('.drop-vertically').droppable({
+			accept: 'drag-vertical',
+			drop:function(event, ui) {
+				console.log(event, ui)
+				alert(ui.draggable.attr('id'))
+			}
+		});*/
 		
 		function cloneImage(ui, zone, id){
 			let idExists = false;
