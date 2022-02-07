@@ -2,6 +2,7 @@
 body{
 	font-family: Bahnschrift;
 	margin: 0px;
+	max-height: 100vh;
 }
 
 /* En-tête */

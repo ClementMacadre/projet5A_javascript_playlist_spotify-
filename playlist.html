@@ -25,7 +25,6 @@
 
 	<!-- Script drag & drop -->
 	<script type="text/javascript">
-		var container;
 		// Met à jour les éléments pouvant être bougés
 		function updateDrag(){
 			$(".bouger").draggable({
@@ -39,6 +38,9 @@
 				axis: 'y',
 				handle: '.move',
 				containment: ('.true-body'),
+				scroll: true,
+				scrollSensitivity: 30,
+				scrollSpeed: 30,
 
 				helper: function(){
 					// Pour bouger toute la div et non uniquement le logo
@@ -80,25 +82,19 @@
 
 		function switchIndex(event, ui, zone){
 			var nextSong;
-			console.log('switchIndex')
 
 			// On récupère la position de l'élément lâché
 			const selectedPos = ui.offset.top;
-			console.log(selectedPos);
 
 			// On calcule sa nouvelle position dans la liste des chansons
 			$('#' + zone + ' .drag-vertical').map(function(){
 				let elemPos = this.offsetTop;
-				//console.log(this.parentElement.id)
-				//console.log(elemPos);
 				if(elemPos > selectedPos){
 					if(nextSong == undefined || elemPos < nextSong.offsetTop){
-						console.log(elemPos);
 						nextSong = this.parentElement;
 					}
 				}
 			});
-			console.log(ui.draggable)
 
 			let imgSrc = '';
 			let title = '';
@@ -123,7 +119,7 @@
 			else{
 				// Appel à l'API Spotify pour mettre à jour la liste
 				// Pour l'index : var index = Array.from(child.parentNode.children).indexOf(child);
-				console.log(nextSong.id);
+				// C'est l'index de la chanson inséeré qui est calculé ici, tous les suivants ont leur précédent+1
 
 				let newID = (title + ' ' + artist).replaceAll(' ', '-').toLowerCase();
 
@@ -246,7 +242,7 @@
 
 	<script type="text/javascript">
 		function playSong(divId){
-			console.log(divId);
+			alert('playing: ' + divId.parentElement.id);
 			// Avec ce parent, on peut facilement retrouver des infos sur la chanson à jouer
 		}
 	</script>
