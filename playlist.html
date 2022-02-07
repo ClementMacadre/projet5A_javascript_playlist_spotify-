@@ -25,6 +25,7 @@
 
 	<!-- Script drag & drop -->
 	<script type="text/javascript">
+		var container;
 		// Met à jour les éléments pouvant être bougés
 		function updateDrag(){
 			$(".bouger").draggable({
@@ -37,8 +38,10 @@
 			$('.drag-vertical').draggable({
 				axis: 'y',
 				handle: '.move',
+				containment: ('.true-body'),
+
 				helper: function(){
-					// Pour bouger 
+					// Pour bouger toute la div et non uniquement le logo
 					return this.parentElement;
 				}
 			});
@@ -46,7 +49,7 @@
 
 		$(".deposer").droppable({ 
 			accept:function(d){
-				// Accepter uniquement les éléments contenant la classe bouger
+				// Accepter uniquement les éléments contenant la classe bouger ou drag-vertical
 				if(d.hasClass("drag-vertical") || d.hasClass("bouger")){
 					return true;
 				}
@@ -55,7 +58,8 @@
 			drop:function(event, ui){
 				if(ui.draggable.attr('class').includes('drag-vertical')){
 					// Si le dépot concerne le changement d'index
-					switchIndex(event, ui);
+					let zone = ui.draggable.parent().parent().attr('id');
+					switchIndex(event, ui, zone);
 				}else{
 					// Si le dépot concerne le déplacement vers une autre zone
 					let zone = ui.draggable.parent().attr('id');
@@ -74,10 +78,93 @@
 			}
 		});
 
-		function switchIndex(event, ui){
-			// On récupère la position de l'élément lâché
-			// On calcule sa nouvelle position dans la liste des chansons
+		function switchIndex(event, ui, zone){
+			var nextSong;
 			console.log('switchIndex')
+
+			// On récupère la position de l'élément lâché
+			const selectedPos = ui.offset.top;
+			console.log(selectedPos);
+
+			// On calcule sa nouvelle position dans la liste des chansons
+			$('#' + zone + ' .drag-vertical').map(function(){
+				let elemPos = this.offsetTop;
+				//console.log(this.parentElement.id)
+				//console.log(elemPos);
+				if(elemPos > selectedPos){
+					if(nextSong == undefined || elemPos < nextSong.offsetTop){
+						console.log(elemPos);
+						nextSong = this.parentElement;
+					}
+				}
+			});
+			console.log(ui.draggable)
+
+			let imgSrc = '';
+			let title = '';
+			let artist = '';
+			// On récupère les infos de la div déplacée pour la recréer ensuite
+			ui.draggable[0].childNodes.forEach(function(node){
+				if(node.className.includes('song-image')){
+					imgSrc = node.getAttribute('src');
+				}
+				if(node.className.includes('song-title')){
+					title = node.textContent;
+				}
+				if(node.className.includes('song-artist')){
+					artist = node.textContent;
+				}
+			});
+
+			if(nextSong == undefined){
+				// Si il n'est pas défini, sa position est tout à la fin, donc on appelle la fonction addSong qui fait le travail
+				addSong(zone, imgSrc, title, artist);
+			}
+			else{
+				// Appel à l'API Spotify pour mettre à jour la liste
+				// Pour l'index : var index = Array.from(child.parentNode.children).indexOf(child);
+				console.log(nextSong.id);
+
+				let newID = (title + ' ' + artist).replaceAll(' ', '-').toLowerCase();
+
+				// Insérer l'élément à sa nouvelle position
+				// On change le append par un before l'élément calculé nextSong
+				$('#' + zone + ' #' + nextSong.id).before($(document.createElement('div'))
+					.attr({ 'id' : newID })
+					.addClass('bouger')
+					.append($(document.createElement('div'))
+						.addClass('song drag-vertical')
+						.append($(document.createElement('img'))
+							.attr({ src : 'Pictures/Hamburger_icon.svg'})
+							.addClass('move')
+						)
+					    .append($(document.createElement('img'))
+					        .attr({ src : imgSrc })
+					        .addClass('song-image')
+					    )
+					    .append($(document.createElement('p'))
+					    	.addClass('song-title')
+					    	.text(title)
+					    )
+					    .append($(document.createElement('p'))
+					    	.addClass('song-artist')
+					    	.text(artist))
+						.append($(document.createElement('img'))
+							.attr({ src : 'Pictures/trash.svg',})
+							.attr('onClick', 'deleteSong(this)')
+							.addClass('trash')
+						)
+						.append($(document.createElement('img'))
+							.attr({ src : 'Pictures/play.svg'})
+							// L'argument peut être modifié en fonction des besoins de l'API Spotify
+							.attr('onClick', 'playSong(this.parentElement)')
+							.addClass('play')
+						)
+					)	
+				);
+				updateDrag();
+			}
+			
 		}
 		
 		function cloneImage(ui, zone, id){
@@ -148,6 +235,7 @@
 		addSong('leftzone', 'Pictures/itcotck.jpg', '21st Century Schizoid man', 'King Crimson');
 		addSong('leftzone', 'Pictures/lctc.jpg', 'London Calling', 'The Clash');
 		addSong('leftzone', 'Pictures/animals.jpg', 'Dogs', 'Pink Floyd');
+		addSong('leftzone', 'Pictures/nvm.jpg', 'Smells like teen spirit', 'Nirvava');
 		addSong('leftzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War');
 		addSong('leftzone', 'Pictures/dangerousd.jpg','Future club','Perturbator');
 
