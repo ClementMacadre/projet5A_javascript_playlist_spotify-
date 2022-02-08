@@ -17,7 +17,10 @@ fonctions:
 - `addSong(div, imgSrc, title, artist)` pour ajouter une chanson avec en argument l'url de l'image à afficher, le titre de la chanson et l'artiste
 - exemple : `addSong('leftzone', 'Pictures/lctc.jpg', 'London Calling', 'The Clash');`
 - L'ajout d'une chanson à une des divs est géré par la fonction `cloneImage`, il faudra ajouter les requêtes au serveur ici.
-- `updateDrag` qui met à jour les éléments qui peuvent bouger
+- `updateDrag()` qui met à jour les éléments qui peuvent bouger
+- `switchIndex(event, ui, zone)` qui gère le changement de l'ordre d'une chanson dans la playlist
+- `deleteSong(e)` supprime une chanson de la playlist
+- `playSong(divId)` Joue une musique
 
 
 ## Génération de playlist à l'aide de l'api Spotify

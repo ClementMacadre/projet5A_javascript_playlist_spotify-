@@ -46,8 +46,8 @@ body{
 }
 
 /* Largeur des images dans les box */
-#leftzone{
-	border:  2px #E64E95 solid;
+.deposer{
+	border: 2px #E64E95 solid;
 	display: inline-block;
 	flex: 50%;
 	max-height: calc(100vh - 110px);
@@ -55,16 +55,14 @@ body{
 	scrollbar-color: darkblue #E64E95;
 	scrollbar-width: thin;
 }
-#dropzone{
-	border:  2px #E64E95 solid;
-	display: inline-block;
-	flex: 50%;
-	max-height: calc(100vh - 110px);
-	overflow: auto;
-	scrollbar-color: darkblue #E64E95;
-	scrollbar-width: thin;
+.deposer::-webkit-scrollbar {
+  width: 7px;
+  height: 8px;
+  background-color: #E64E95; /* or add it to the track */
 }
-
+.deposer::-webkit-scrollbar-thumb{
+	background: darkblue;
+}
 /* Style des divs pour une chanson */
 .song{
 	background-color: aliceblue;

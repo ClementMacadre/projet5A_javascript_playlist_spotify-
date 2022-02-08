@@ -126,6 +126,7 @@
 				// Insérer l'élément à sa nouvelle position
 				// On change le append par un before l'élément calculé nextSong
 				$('#' + zone + ' #' + nextSong.id).before($(document.createElement('div'))
+					// Mettre l'ID de la chanson sur l'API
 					.attr({ 'id' : newID })
 					.addClass('bouger')
 					.append($(document.createElement('div'))
