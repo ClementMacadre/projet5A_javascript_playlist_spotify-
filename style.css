@@ -32,6 +32,41 @@ body{
 	background-color: white;
 }
 
+/* Page d'accueil */
+.home{
+	height: calc(100vh - 95px);
+	margin: 0px 10px;
+	gap: 15px 5px;
+}
+.home h1{
+	font-size: 50px;
+	color: #E64E95;
+	margin: 35px;
+}
+.home p{
+	color: darkblue;
+	font-size: 20px;
+	margin-left: 35px;
+}
+.button-center{
+  display: flex;
+	justify-content: center;
+  align-items: center;
+}
+.button-center button{
+	height: 50px;
+	width: 430px;
+	border-radius: 10px;
+	font-size: 30px;
+	color: white;
+	background-color: #E64E95;
+}
+.button-center button:hover{
+	cursor: pointer;
+	color: #E64E95;
+	background-color: white;
+}
+
 /* Partie centrale */
 .true-body{
 	display: flex;
@@ -39,12 +74,6 @@ body{
 	margin: 0px 10px;
 	gap: 15px 5px;
 }
-.true-body h1{
-	font-size: 50px;
-	color: #E64E95;
-	margin: 35px;
-}
-
 /* Largeur des images dans les box */
 .deposer{
 	border: 2px #E64E95 solid;
