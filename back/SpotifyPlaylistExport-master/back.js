@@ -1,6 +1,6 @@
 const fs = require('fs')
 const SpotifyWebApi = require('spotify-web-api-node');
-const token = "BQCsJ3ThQfXNfPFoWcXUj9aNIfPzvYn-etp7-lyXW23yuUdXuAIYbkcoLdWo3Akwt_PmuRYrUJdHqatP81sk3NSZsbDF5m-ITaXCvUVMS7y-M5gdkgQ8ar1txQeCJpB9eMtbpr7VIU_fx9WK3Ke2f_ZRB2yzD6NiWgcjd_KgDpVdsmPmYKOcYQKdtW0YnHb3ajeOGnNn1kjnjoTk-SQ_ZJu_KnTT4Bdsvflf0yHifrhuitPEGXuxs7jNWV5ehevbN6aUOTDTNDnw8r74Xle3zN4ULpTlzm-Xuf3o4IYrI7PpF2yy"
+const token = "BQDHTRqGTRyjm7ZaRaF_zXH_FJmR7dSis_09_oH1_oVkEDpeQGuXI5Vi4fVsFuV2xAoJthLzeE7F00BY3MnqxcllSE4pfLqNujrVbxvc94bLxGn5QWS8T5O84qitB6HPuS2BgjqYZEmLP8acDPBXrnwZPofDdNqOgxMB9BtTzyXsbPCqvxX4Pw_FX_vJWxLOGh8YfGEL5RdpoGPvmwXi2HBhJ3PbXUMrzPLQQFT0OX_-U1sumtvHmkaF9jgPGR__gexo01nJEr4XpoAV0TmQfmpQFWurtm3VDosCmjs8t0wK6ehD"
 const spotifyApi = new SpotifyWebApi();
 const nbRecentSongs = 20
 spotifyApi.setAccessToken(token);
@@ -18,7 +18,7 @@ function getMyData() {
 function getMyID() {
   (async () => {
     const me = await spotifyApi.getMe();
-    console.log(me.body['id']);
+    //console.log(me.body['id']);
   })().catch(e => {
     console.error(e);
   });
@@ -194,11 +194,12 @@ async function getIDRecentPlayed() {
   }).then(function(data) {
       // Output items
       console.log("Get id of the last "+data.body.items.length+" song played:");
-      data.body.items.forEach(item => console.log('spotify:track:'+item.track.album['id']));
+      data.body.items.forEach(item => console.log(['spotify:track:'+item.track.album['id']]));
     }, function(err) {
       console.log('Something went wrong!', err);
     });
 }
+
 
 async function getPresentationRecentPlayed() {
 //Gets Track name, artist name, image url and 30 sec preview of the last nbRecentSongs song played
@@ -208,16 +209,16 @@ async function getPresentationRecentPlayed() {
   }).then(function(data) {
       // Output items
       console.log("Gets Track name, artist name and image url of the last "+data.body.items.length+" song played:");
-      data.body.items.forEach(item => console.log(item.track['name']));
-      data.body.items.forEach(item => console.log(item.track.album.artists[0].name));    
-      data.body.items.forEach(item => console.log(millisToMinutesAndSeconds(item.track['duration_ms'])));  
-      data.body.items.forEach(item => console.log(item.track.album.images[2]['url']));
-      data.body.items.forEach(item => console.log(item.track['preview_url']));
+      data.body.items.forEach(item => console.log([item.track['name'],
+                                                  item.track.album.artists[0].name,
+                                                  millisToMinutesAndSeconds(item.track['duration_ms']),
+                                                  item.track.album.images[2]['url'],
+                                                  item.track['preview_url']
+                                                  ]));
     }, function(err) {
       console.log('Something went wrong!', err);
     });
 }
-
 
 async function searchArtists(research){
   spotifyApi.searchArtists(research)
@@ -309,11 +310,11 @@ async function getUserPlaylistsNameAndID(userName){
   const data = await spotifyApi.getUserPlaylists(userName)
   let playlists = []
   for (let playlist of data.body.items) {
-    //console.log(playlist.name + " " + playlist.id)
+    playlists.push([playlist.name,playlist.id])
   }
+  console.log(playlists)    
+  return playlists;
 }
-
-getUserPlaylistsNameAndID(getMyID());
 
 async function getPlaylist(playlistID){
 // Get a playlist
@@ -325,8 +326,26 @@ async function getPlaylist(playlistID){
   });
 }
 
+async function getPresentationPlaylist(playlistID){
+// Get a playlist
+  spotifyApi.getPlaylist(playlistID)
+  .then(function(data) {
+    console.log('Some information about this playlist', data.body);
+    /*data.body.items.forEach(item => console.log([item.track['name'],
+                                                  item.track.album.artists[0].name,
+                                                  millisToMinutesAndSeconds(item.track['duration_ms']),
+                                                  item.track.album.images[2]['url'],
+                                                  item.track['preview_url']
+                                                  ]));*/
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+}
+
+//console.log(getUserPlaylistsNameAndID())
+
 async function getSnapshotPlaylist(playlistID){
-  // Get a playlist
+  // Get a playlist snapshot_id
     spotifyApi.getPlaylist(playlistID)
     .then(function(data) {
       console.log('Le snapshot ID :',data.body['snapshot_id']);
@@ -335,7 +354,7 @@ async function getSnapshotPlaylist(playlistID){
     });
 }
 
-async function changePlaylistDetails(playlistID, text, desc,boolpublic){
+async function changePlaylistDetails(playlistID, text, desc, boolpublic){
 // Change playlist details
   spotifyApi.changePlaylistDetails(playlistID,
   {
@@ -388,6 +407,7 @@ async function getArtist(artistID){
 }
 
 function millisToMinutesAndSeconds(millis) {
+  //Converts ms to min and sec
   var minutes = Math.floor(millis / 60000);
   var seconds = ((millis % 60000) / 1000).toFixed(0);
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
@@ -395,8 +415,7 @@ function millisToMinutesAndSeconds(millis) {
 
 //getMyData();
 //newPlaylist("testapi");
-//getUserPlaylistsParsed(getMyID());
-
+//getMyID()
 //getrecentplayed();
 //searchArtists("Jul");
 //searchPlaylists("Hit");
