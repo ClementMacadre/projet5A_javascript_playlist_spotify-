@@ -1,5 +1,9 @@
 # Projet javascript Joly Dylan, Macadré Clément, Gomond Ronan
 
+## Init
+Pour créer l'application, on utilise l'api en mode développeur, il faut donc ajouter l'email du compte spotify qui utilise l'appli (dans le dashbord spotify for dev)
+
+
 ## TODO
 
 - drag vertical pour changer l'ordre des chansons
