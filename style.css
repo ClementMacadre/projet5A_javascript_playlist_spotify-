@@ -67,7 +67,47 @@ body{
 	background-color: white;
 }
 
-/* Partie centrale */
+
+/* Page de sélaction des playlists */
+#playlists{
+	display: flex;
+	padding: 5px;
+}
+.list{
+	border: 2px solid #E64E95;
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	grid-template-rows: ;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+.list-image{
+	height: 150px;
+	width: 150px;
+	grid-area: 1 / 1 / 2 / 2;
+}
+.list-name{
+	margin: 7px 0px 8px 0px;
+	font-size: 20px;
+	font-weight: bold;
+	color: darkblue;
+	user-select: none;
+	grid-area: 1 / 2 / 2 / 3;
+}
+
+
+/* Page de création des playlists */
+.zone-header{
+	display: flex;
+}
+.leftzone-header{
+	flex: 50%;
+}
+.dropzone-header{
+	flex: 50%;
+}
+
+
 .true-body{
 	display: flex;
 	height: calc(100vh - 95px);
