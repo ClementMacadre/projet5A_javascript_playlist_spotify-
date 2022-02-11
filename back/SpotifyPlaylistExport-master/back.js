@@ -1,6 +1,6 @@
 const fs = require('fs')
 const SpotifyWebApi = require('spotify-web-api-node');
-const token = "BQDHTRqGTRyjm7ZaRaF_zXH_FJmR7dSis_09_oH1_oVkEDpeQGuXI5Vi4fVsFuV2xAoJthLzeE7F00BY3MnqxcllSE4pfLqNujrVbxvc94bLxGn5QWS8T5O84qitB6HPuS2BgjqYZEmLP8acDPBXrnwZPofDdNqOgxMB9BtTzyXsbPCqvxX4Pw_FX_vJWxLOGh8YfGEL5RdpoGPvmwXi2HBhJ3PbXUMrzPLQQFT0OX_-U1sumtvHmkaF9jgPGR__gexo01nJEr4XpoAV0TmQfmpQFWurtm3VDosCmjs8t0wK6ehD"
+const token = "BQC4M8KLn81rsZvrX11frrdeGYrTUqxwiBiuqats-e2CkUeKaBfS7YHNwsBYOjsCsVVf146KawT56PxjIBStorE6fUJuPsyC2uN-7wz2vKBMBIbvuRe8ArlixEwXuWmGyacsvIsbBL4KKOUObKPqc_ztaxJbrPD9XUzF8cGwSlMBDvlZvGfhCMzRwqbU17dBnndTylN4r3Fv3K5sYOLgSYWSKOOJBzx_P6yvruGrcGTbOOkVVx5lYTer__afZwpek9e4s2Rz0wJXsAEYCfLOvMaWVswDPefWdMWY1Ae34OoMgayO"
 const spotifyApi = new SpotifyWebApi();
 const nbRecentSongs = 20
 spotifyApi.setAccessToken(token);
@@ -315,6 +315,8 @@ async function getUserPlaylistsNameAndID(userName){
   console.log(playlists)    
   return playlists;
 }
+const data = getUserPlaylistsNameAndID(getMyID())
+console.log( data )
 
 async function getPlaylist(playlistID){
 // Get a playlist
@@ -326,23 +328,20 @@ async function getPlaylist(playlistID){
   });
 }
 
-async function getPresentationPlaylist(playlistID){
+async function getPresentationSongsPlaylist(playlistID){
 // Get a playlist
-  spotifyApi.getPlaylist(playlistID)
-  .then(function(data) {
+    const data = await spotifyApi.getPlaylist(playlistID)
     console.log('Some information about this playlist', data.body);
-    /*data.body.items.forEach(item => console.log([item.track['name'],
+    data.body.tracks.items.forEach(item => console.log([item.track['name'],
                                                   item.track.album.artists[0].name,
                                                   millisToMinutesAndSeconds(item.track['duration_ms']),
                                                   item.track.album.images[2]['url'],
                                                   item.track['preview_url']
-                                                  ]));*/
-  }, function(err) {
-    console.log('Something went wrong!', err);
-  });
+                                                  ]));
+
 }
 
-//console.log(getUserPlaylistsNameAndID())
+//getPresentationSongsPlaylist('1RhhvhdE7Kro3HN6lL5Sje')
 
 async function getSnapshotPlaylist(playlistID){
   // Get a playlist snapshot_id
