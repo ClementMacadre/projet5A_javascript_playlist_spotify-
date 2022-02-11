@@ -22,6 +22,12 @@
 	</div>
 
 	<script type="text/javascript">
+		// Clic sur le bouton
+		$('#create-playlist').click(function(){
+			window.location='playlist.html';
+		});
+
+		// Ajoute une playlist
 		function addList(imgSrc, nom){
 			$('#playlists').append($(document.createElement('div'))
 				.attr({ 'id' : nom })
@@ -34,6 +40,9 @@
 			    	.addClass('list-name')
 			    	.text(nom)
 			    )
+			    .click(function(){
+			    	alert(this.id);
+			    })
 			);
 		}
 		addList('Pictures/lctc.jpg','Punk rock')
