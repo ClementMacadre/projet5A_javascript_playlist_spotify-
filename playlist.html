@@ -13,7 +13,7 @@
 <body>
 	<div class="header">
 		<img src="Pictures/Yfitops.png" height="40">
-		<button id="connexion" style="float:right">Connexion</button>
+		<button id="return" style="float:right">Retour à l'accueil</button>
 	</div>
 	<div class="zone-header">
 		<div id="leftzone-header" class="leftzone">
@@ -25,35 +25,37 @@
 			<select name="user-playlists">
 				<option>test1 </option>
 				<option>test2</option>
-				<!-- Les options doivent être créer avec une requetes sur les playlistes du user-->
+				<!-- Les options doivent être créees avec une requête sur les playlists du user-->
 			</select>
 			<button id="user-playlist-tracks" name="user-playlist-tracks">Valider</button>
 			<form>
 				<label for="research">Recherche :</label>
 				<input type="text" id="research" name="research">
 				<input type="submit" value="Valider">
-				<!-- envoie un requete pour recherche des son avec mots clés-->
-			  </form>
+				<!-- envoie une requête pour recherche des son avec mots clés-->
+			</form>
 		</div>
+
 		<div id="dropzone-header" class="rightzone"> 
-			<p>Création et/ou modification de playlistes</p>
+			<p>Création et/ou modification de playlists</p>
 			<form>
-				<label for="creat">Nouvelle playliste :</label>
+				<label for="creat">Nouvelle playlist :</label>
 				<input type="text" id="creat" name="creat">
 				<input type="submit" value="Valider">
-				<!-- envoie un requete pour recherche des son avec mots clés-->
+				<!-- envoie une requête pour recherche des son avec mots clés-->
 			  </form>
 			<label for="playlists">Choix de playlist à modifier :</label>
 			<select name="playlists">
 				<option>test3 </option>
 				<option>test4</option>
-				<!-- Les options doivent être créer avec une requetes sur les playlistes du user-->
+				<!-- Les options doivent être créees avec une requête sur les playlists du user-->
 			</select>
 			<button id="user-playlist-tracks">Valider</button><br>
 			<label for="delete-playlist">Suprimmer la playlist :</label>
 			<button id="delete-playlist" name="delete-playlist">Valider</button>
 		</div>
 	</div>
+
 	<div class="true-body">
 		<div id="leftzone" class="deposer">
 		</div>
@@ -284,63 +286,10 @@
 			alert('playing: ' + divId.parentElement.id);
 			// Avec ce parent, on peut facilement retrouver des infos sur la chanson à jouer
 		}
-	</script>
 
-	<!-- Script Connexion -->
-	<script type="text/javascript">
-		var loginButton = document.getElementById('connexion');
-
-		loginButton.addEventListener('click', function() {
-			login(function(accessToken) {
-	            getUserData(accessToken)
-	                .then(function(response) {
-	                    loginButton.style.display = 'none';
-	                    resultsPlaceholder.innerHTML = template(response);
-	                });
-	            });
-	    });
-
-		function login(callback) {
-			var CLIENT_ID = '6b284830006843e7ae7b170725715aed';
-			var REDIRECT_URI = 'http://jmperezperez.com/spotify-oauth-jsfiddle-proxy/';
-			
-			function getLoginURL(scopes) {
-			    return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
-			      '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
-			      '&scope=' + encodeURIComponent(scopes.join(' ')) +
-			      '&response_type=token';
-			}
-
-			var url = getLoginURL([
-			    'user-read-email'
-			]);
-
-			var width = 450,
-			    height = 730,
-			    left = (screen.width / 2) - (width / 2),
-			    top = (screen.height / 2) - (height / 2);
-
-			window.addEventListener("message", function(event) {
-			    var hash = JSON.parse(event.data);
-			    if (hash.type == 'access_token') {
-			        callback(hash.access_token);
-			    }
-			}, false);
-
-			var w = window.open(url,
-			                    'Spotify',
-			                    'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
-			                   );
-		}
-
-	    function getUserData(accessToken) {
-	        return $.ajax({
-	            url: 'https://api.spotify.com/v1/me',
-	            headers: {
-	               'Authorization': 'Bearer ' + accessToken
-	            }
-	        });
-	    }
+		$('#return').click(function(){
+			window.location = 'menu.html';
+		});
 	</script>
 </body>
 </html>
