@@ -22,9 +22,7 @@
 			<button id="recent-tracks" name="recent-tracks">Valider</button>
 			<br>
 			<label for="user-playlists">Choix de playlist :</label>
-			<select name="user-playlists">
-				<option>test1 </option>
-				<option>test2</option>
+			<select id="user-playlists" name="user-playlists">
 				<!-- Les options doivent être créees avec une requête sur les playlists du user-->
 			</select>
 			<button id="user-playlist-tracks" name="user-playlist-tracks">Valider</button>
@@ -44,10 +42,8 @@
 				<input type="submit" value="Valider">
 				<!-- envoie une requête pour recherche des son avec mots clés-->
 			  </form>
-			<label for="playlists">Choix de playlist à modifier :</label>
-			<select name="playlists">
-				<option>test3 </option>
-				<option>test4</option>
+			<label for="editable-playlists">Choix de playlist à modifier :</label>
+			<select id="editable-playlists" name="editable-playlists">
 				<!-- Les options doivent être créees avec une requête sur les playlists du user-->
 			</select>
 			<button id="user-playlist-tracks">Valider</button><br>
@@ -263,10 +259,28 @@
 			updateDrag();
 		}
 
+		// Ajout d'une playlist à la balise <select> ayant l'id user-playlists
+		// Le premier argument est l'ID de la playlist
+		// Le second est le nom de la playlist
+		function addSongBank(value, dispalyedName){
+			$('#user-playlists').append(new Option(dispalyedName, value));
+		}
+
+		// Ajout d'une playlist à la balise <select> ayant l'id editable-playlists
+		// Le premier argument est l'ID de la playlist
+		// Le second est le nom de la playlist
+		function addEditablePlaylist(value, dispalyedName){
+			$('#editable-playlists').append(new Option(dispalyedName, value));
+		}
+
 		function deleteSong(e){
 			// Appel à l'API Spotify pour mettre à jour la playlist
 			e.parentElement.remove();
 		}
+
+		addSongBank('playlistID1','Mes favoris');
+		addSongBank('playlistID2','Tendances pop');
+		addEditablePlaylist('playlistID3','Soirée de folie');
 
 		// Ajouter dans la zone de gauche
 		addSong('leftzone', 'Pictures/itcotck.jpg', '21st Century Schizoid man', 'King Crimson');

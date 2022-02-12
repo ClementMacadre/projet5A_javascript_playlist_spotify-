@@ -4,6 +4,9 @@ body{
 	margin: 0px;
 	max-height: 100vh;
 }
+hr{
+	border: 1px solid darkblue;
+}
 
 /* En-tête */
 .header{
@@ -90,14 +93,15 @@ body{
 }
 .list{
 	margin: 0 5px;
-	border: 2px solid #E64E95;
+	border: 3px solid #E64E95;
 	display: grid;
 	grid-template-columns: 150px 1fr 5px;
 	grid-template-rows: 1fr;
 	grid-column-gap: 15px;
 	grid-row-gap: 0px;
 	justify-content: center;
-  align-items: center;
+	align-items: center;
+	cursor: pointer;
 }
 .list-image{
 	height: 150px;

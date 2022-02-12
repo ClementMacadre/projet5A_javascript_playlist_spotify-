@@ -17,7 +17,7 @@
 	<div id="create">
 		<button id="create-playlist">Créer une playlist</button>
 	</div>
-	<br>
+	<hr>
 	<div id="playlists">
 	</div>
 
@@ -28,9 +28,9 @@
 		});
 
 		// Ajoute une playlist
-		function addList(imgSrc, nom){
+		function addList(id, imgSrc, nom){
 			$('#playlists').append($(document.createElement('div'))
-				.attr({ 'id' : nom })
+				.attr({ 'id' : id })
 				.addClass('list')
 			    .append($(document.createElement('img'))
 			        .attr({ src : imgSrc })
@@ -45,8 +45,8 @@
 			    })
 			);
 		}
-		addList('Pictures/lctc.jpg','Punk rock')
-		addList('Pictures/dangerousd.jpg','Synthwave')
+		addList('mauvais-garcon','Pictures/lctc.jpg','Punk rock')
+		addList('jours-dangereux','Pictures/dangerousd.jpg','Synthwave')
 	</script>
 </body>
 </html>
