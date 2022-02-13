@@ -107,10 +107,10 @@
 					}
 					let id = ui.draggable.attr('id');
 					if(zone === 'dropzone'){
-						cloneImage(ui, "#leftzone", id);
+						cloneImage(ui, "leftzone", id);
 					}
 					else{
-						cloneImage(ui, "#dropzone", id);
+						cloneImage(ui, "dropzone", id);
 					}
 				}
 			}
@@ -135,6 +135,7 @@
 			let imgSrc = '';
 			let title = '';
 			let artist = '';
+			let playButton = false;
 			// On récupère les infos de la div déplacée pour la recréer ensuite
 			ui.draggable[0].childNodes.forEach(function(node){
 				if(node.className.includes('song-image')){
@@ -146,36 +147,71 @@
 				if(node.className.includes('song-artist')){
 					artist = node.textContent;
 				}
+				if(node.className.includes('play')){
+					playButton = true;
+				}
 			});
 
 			let parent = ui.draggable.parent().attr('id');
-			if(nextSong == undefined){
-				// Si il n'est pas défini, sa position est tout à la fin, donc on appelle la fonction addSong qui fait le travail
-				addSong(parent, zone, imgSrc, title, artist);
+			let builder = new SongBuilder(parent, zone, imgSrc, title, artist).canMove().canBeDeleted();
+			if(playButton){
+				// Si on peut avoir un apperçu de la chanson
+				builder.hasPlayButton();
 			}
-			else{
-				// Appel à l'API Spotify pour mettre à jour la liste
-				// Pour l'index : var index = Array.from(child.parentNode.children).indexOf(child);
-				// C'est l'index de la chanson inséeré qui est calculé ici, tous les suivants ont leur précédent+1
-				addSong(parent, zone, imgSrc, title, artist, 6, nextSong.id);
+			if(nextSong != undefined){
+				// Pour la position de la chanson
+				builder.insertBefore(nextSong.id);				
 			}
-			
+			// Appel à l'API Spotify pour mettre à jour la liste
+			// Pour l'index : var index = Array.from(child.parentNode.children).indexOf(child);
+			// C'est l'index de la chanson inséeré qui est calculé ici, tous les suivants ont leur précédent+1
+			builder.build();
 		}
 		
 		function cloneImage(ui, zone, id){
 			let idExists = false;
 			// On parcourt toutes les images dans la zone pour vérifier que l'image n'existe pas déjà
-			$(zone + ' > .bouger').map(function(){
+			$('#' + zone + ' > .bouger').map(function(){
 				if(this.id == id){
 					idExists = true;
 				}
 			});
+
 			// Ici est gérée la logique à appliquer lors du drop d'une image
 			if(!idExists){
 				// Gestion de la nouvelle image (en récupérant l'image déposée)
-				newImage = ui.draggable.clone();
-				$(zone).append(newImage);
-				updateDrag();
+				let imgSrc = '';
+				let title = '';
+				let artist = '';
+				let playButton = false;
+
+				// On récupère les infos de la div déplacée pour la recréer ensuite
+				// On ajoute un fisrtChild pour descendre dans l'arbre de la DOM
+				ui.draggable[0].firstChild.childNodes.forEach(function(node){
+					if(node.className.includes('song-image')){
+						imgSrc = node.getAttribute('src');
+					}
+					if(node.className.includes('song-title')){
+						title = node.textContent;
+					}
+					if(node.className.includes('song-artist')){
+						artist = node.textContent;
+					}
+					if(node.className.includes('play')){
+						playButton = true;
+					}
+				});
+
+				// On construit le nouvel élément
+				let builder = new SongBuilder(id, zone, imgSrc, title, artist);
+				if(playButton){
+					builder.hasPlayButton();
+				}
+				if(zone == 'dropzone'){
+					// Si c'est dans la sone où on peut modifier la playlist
+					builder.canMove().canBeDeleted();
+				}
+				builder.build();
 			}
 		}
 	</script>
@@ -183,7 +219,7 @@
 	<!-- Script add div -->
 	<script type="text/javascript">
 		// Builder pour les chansons avec des fonctions pour ajouter des options
-		var Song = function(i, z, imgSrc, t, a){
+		var SongBuilder = function(i, z, imgSrc, t, a){
 			// Variables obligatoires
 			let zone = z;
 			let id = i;
@@ -250,13 +286,11 @@
 							.append(this.trashCan)
 						);
 					if(this.next == undefined){
-						console.log('append')
 						$('#' + zone).append(element);
 					}
 					else{
 						// Insérer l'élément à sa nouvelle position
 						// On change le append par un before l'élément calculé next
-						console.log('before')
 						$('#' + zone + ' #' + this.next).before(element);
 					}
 					updateDrag();
@@ -266,7 +300,7 @@
 
 
 		function addSong(id, zone, imgSrc, title, artist, supplement=0, next=''){
-			let builder = new Song(id, zone, imgSrc, title, artist);
+			let builder = new SongBuilder(id, zone, imgSrc, title, artist);
 			if(supplement == 0){
 				builder.build();
 			}
@@ -281,12 +315,6 @@
 			}
 			if(supplement == 3){
 				builder.canMove().canBeDeleted().hasPlayButton().build();
-			}
-			if(supplement == 6){
-				builder.canMove();
-				builder.canBeDeleted();
-				builder.insertBefore(next);
-				builder.build();
 			}
 		}
 
@@ -311,10 +339,10 @@
 		// Ajouter dans la zone de gauche
 		addSong('i','leftzone', 'Pictures/itcotck.jpg', '21st Century Schizoid man', 'King Crimson');
 		addSong('p','leftzone', 'Pictures/lctc.jpg', 'London Calling', 'The Clash', 1);
-		addSong('o','leftzone', 'Pictures/animals.jpg', 'Dogs', 'Pink Floyd');
+		addSong('o','leftzone', 'Pictures/animals.jpg', 'Dogs', 'Pink Floyd', 1);
 		addSong('n','leftzone', 'Pictures/nvm.jpg', 'Smells like teen spirit', 'Nirvava');
 		addSong('l','leftzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War');
-		addSong('m','leftzone', 'Pictures/dangerousd.jpg','Future club','Perturbator');
+		addSong('m','leftzone', 'Pictures/dangerousd.jpg','Future club','Perturbator', 1);
 
 		// Ajouter dans la zone de droite
 		addSong('l','dropzone', 'Pictures/mwr.jpg','Warriors of the world','Man O War', 2);
@@ -329,7 +357,7 @@
 
 		function deleteSong(e){
 			// Appel à l'API Spotify pour mettre à jour la playlist
-			e.parentElement.remove();
+			e.parentElement.parentElement.remove();
 		}
 
 		$('#return').click(function(){
