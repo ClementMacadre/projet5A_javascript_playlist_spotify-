@@ -85,6 +85,7 @@
 			});
 		}
 
+		// Gestion du drop d'un élément (de tout type)
 		$(".deposer").droppable({ 
 			accept:function(d){
 				// Accepter uniquement les éléments contenant la classe bouger ou drag-vertical
@@ -97,7 +98,7 @@
 				if(ui.draggable.attr('class').includes('drag-vertical')){
 					// Si le dépot concerne le changement d'index
 					let zone = ui.draggable.parent().parent().attr('id');
-					switchIndex(event, ui, zone);
+					switchIndex(ui, zone);
 				}else{
 					// Si le dépot concerne le déplacement vers une autre zone
 					let zone = ui.draggable.parent().attr('id');
@@ -116,7 +117,7 @@
 			}
 		});
 
-		function switchIndex(event, ui, zone){
+		function switchIndex(ui, zone){
 			var nextSong;
 
 			// On récupère la position de l'élément lâché
@@ -153,10 +154,10 @@
 			});
 
 			let parent = ui.draggable.parent().attr('id');
-			let builder = new SongBuilder(parent, zone, imgSrc, title, artist).canMove().canBeDeleted();
+			let builder = new SongBuilder(parent, zone, imgSrc, title, artist).canMoveVertically().canBeDeleted();
 			if(playButton){
 				// Si on peut avoir un apperçu de la chanson
-				builder.hasPlayButton();
+				builder.canBePlayed();
 			}
 			if(nextSong != undefined){
 				// Pour la position de la chanson
@@ -205,11 +206,11 @@
 				// On construit le nouvel élément
 				let builder = new SongBuilder(id, zone, imgSrc, title, artist);
 				if(playButton){
-					builder.hasPlayButton();
+					builder.canBePlayed();
 				}
 				if(zone == 'dropzone'){
 					// Si c'est dans la sone où on peut modifier la playlist
-					builder.canMove().canBeDeleted();
+					builder.canMoveVertically().canBeDeleted();
 				}
 				builder.build();
 			}
@@ -218,11 +219,26 @@
 
 	<!-- Script add div -->
 	<script type="text/javascript">
+		// Ajout d'une playlist à la balise <select> ayant l'id user-playlists
+		// Le premier argument est l'ID de la playlist
+		// Le second est le nom de la playlist
+		function addSongBank(value, dispalyedName){
+			$('#user-playlists').append(new Option(dispalyedName, value));
+		}
+
+		// Ajout d'une playlist à la balise <select> ayant l'id editable-playlists
+		// Le premier argument est l'ID de la playlist
+		// Le second est le nom de la playlist
+		function addEditablePlaylist(value, dispalyedName){
+			$('#editable-playlists').append(new Option(dispalyedName, value));
+		}
+
+
 		// Builder pour les chansons avec des fonctions pour ajouter des options
 		var SongBuilder = function(i, z, imgSrc, t, a){
 			// Variables obligatoires
-			let zone = z;
 			let id = i;
+			let zone = z;
 			let img = $(document.createElement('img')).attr({ src : imgSrc }).addClass('song-image');
 			let title = $(document.createElement('p')).addClass('song-title').text(t);
 			let artist = $(document.createElement('p')).addClass('song-artist').text(a);
@@ -235,11 +251,11 @@
 			let verticalDrag = '';
 			
 			return{
-				hasPlayButton:function(){
+				canBePlayed:function(){
 					this.playButton = $(document.createElement('img'))
 						.attr({
 							'src' : 'Pictures/play.svg',
-							'onClick' : 'playSong(this.parentElement)'
+							'onClick' : 'playSong(this.parentElement.parentElement.id)'
 						})
 						.addClass('play');
 					return this;
@@ -255,7 +271,7 @@
 					return this;
 				},
 
-				canMove:function(){
+				canMoveVertically:function(){
 					this.moveable = $(document.createElement('img'))
 						.attr('src','Pictures/Hamburger_icon.svg')
 						.addClass('move');
@@ -305,31 +321,17 @@
 				builder.build();
 			}
 			if(supplement == 1){
-				builder.hasPlayButton();
+				builder.canBePlayed();
 				builder.build();
 			}
 			if(supplement == 2){
-				builder.canMove();
+				builder.canMoveVertically();
 				builder.canBeDeleted();
 				builder.build();
 			}
 			if(supplement == 3){
-				builder.canMove().canBeDeleted().hasPlayButton().build();
+				builder.canMoveVertically().canBeDeleted().canBePlayed().build();
 			}
-		}
-
-		// Ajout d'une playlist à la balise <select> ayant l'id user-playlists
-		// Le premier argument est l'ID de la playlist
-		// Le second est le nom de la playlist
-		function addSongBank(value, dispalyedName){
-			$('#user-playlists').append(new Option(dispalyedName, value));
-		}
-
-		// Ajout d'une playlist à la balise <select> ayant l'id editable-playlists
-		// Le premier argument est l'ID de la playlist
-		// Le second est le nom de la playlist
-		function addEditablePlaylist(value, dispalyedName){
-			$('#editable-playlists').append(new Option(dispalyedName, value));
 		}
 
 		addSongBank('playlistID1','Mes favoris');
@@ -350,8 +352,8 @@
 	</script>
 
 	<script type="text/javascript">
-		function playSong(div){
-			alert('playing: ' + div.parentElement.id);
+		function playSong(id){
+			alert('playing: ' + id);
 			// Avec ce parent, on peut facilement retrouver des infos sur la chanson à jouer
 		}
 
