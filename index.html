@@ -14,6 +14,7 @@
 	<div class="home">
 		<h1>Hello World</h1>
 		<p><strong>Yfitops</strong> est une interface graphique permettant de créer des playlists à partir d'une session d'écoute de groupe.</p>
+		<br><br><br>
 		<div class="button-center">
 			<button id="connexion">Se connecter à l'application</button>
 		</div>
@@ -21,16 +22,20 @@
 
 	<script type="text/javascript">
 		document.getElementById('connexion').addEventListener('click', function() {
+			window.location.pathname='/login'
+			/*console.log('2');
 			login(function(accessToken) {
 	            getUserData(accessToken)
 	                .then(function(response) {
+						onsole.log('3');
 	                    loginButton.style.display = 'none';
 	                    resultsPlaceholder.innerHTML = template(response);
 	                });
-	            });
+	            });*/
 	    });
 
-		function login(callback) {
+		/*function login(callback) {
+			console.log('4');
 			var CLIENT_ID = '6b284830006843e7ae7b170725715aed';
 			var REDIRECT_URI = 'http://jmperezperez.com/spotify-oauth-jsfiddle-proxy/';
 			
@@ -52,8 +57,10 @@
 
 			window.addEventListener("message", function(event) {
 			    var hash = JSON.parse(event.data);
+				console.log('5');
 			    if (hash.type == 'access_token') {
 			        callback(hash.access_token);
+					console.log(hash.access_token);
 			    }
 			}, false);
 
@@ -62,15 +69,14 @@
 			                    'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
 			                   );
 		}
-
-	    function getUserData(accessToken) {
+		function getUserData(accessToken) {
 	        return $.ajax({
 	            url: 'https://api.spotify.com/v1/me',
 	            headers: {
 	               'Authorization': 'Bearer ' + accessToken
 	            }
 	        });
-	    }
+	    }*/
 	</script>
 </body>
 </html>

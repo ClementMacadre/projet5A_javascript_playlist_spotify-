@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,8 +12,7 @@
             margin-bottom: 1em;
         }
     </style>
-    <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
-</head>
+    </head>
 <body>
     <div class="container">
         <h1>Displaying User Data</h1>
@@ -45,17 +44,29 @@
         (function() {
     
     function login(callback) {
-        var CLIENT_ID = '6b284830006843e7ae7b170725715aed';
-        var REDIRECT_URI = 'http://jmperezperez.com/spotify-oauth-jsfiddle-proxy/';
+        var CLIENT_ID = 'a824c0a83dcb48cb836eb960190412eb';
+        var REDIRECT_URI = 'http://localhost:8888/callback';
         function getLoginURL(scopes) {
             return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
               '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
               '&scope=' + encodeURIComponent(scopes.join(' ')) +
               '&response_type=token';
+              alert(accessToken)
         }
         
         var url = getLoginURL([
-            'user-read-email'
+            'ugc-image-upload',
+            'user-read-email',
+            'user-read-private',
+            'playlist-read-collaborative',
+            'playlist-modify-public',
+            'playlist-read-private',
+            'playlist-modify-private',
+            'user-library-modify',
+            'user-library-read',
+            'user-top-read',
+            'user-read-playback-position',
+            'user-read-recently-played',
         ]);
         
         var width = 450,

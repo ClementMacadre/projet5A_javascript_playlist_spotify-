@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  
+<head>
+  <title>Exemple</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+  
+<style>
+  body,
+  form {
+    padding: 10px;
+    margin: 10px;
+  }
+  
+  input {
+    padding: 5px;
+  }
+</style>
+  
+<body>
+  
+  <form id="create">
+    <label for="create-volt"> Créer volt:</label>
+    <input type="number" id="create-volt" required>
+    <input type="submit" value="Ajouter">
+  </form>
+  
+  <form id="update">
+    <label for="update-volt">Mettre à jour:</label>
+    <input type="number" id="update-volt" required>
+    <input type="submit" value="Mettre à jour">
+  </form>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="send-request.js"></script>
+</body>
+  
+</html>
